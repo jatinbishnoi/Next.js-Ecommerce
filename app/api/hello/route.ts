@@ -3,3 +3,7 @@ export async function GET () {
         status:200,
     });
 }
+
+export async function POST() {
+    return new Response ('Thank u for the post')
+}
