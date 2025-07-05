@@ -1,17 +1,16 @@
-/* eslint-disable @next/next/no-img-element */
 import NotFoundPage from "@/app/not-found";
-import { products } from "@/app/product-data";
+
+export const dynamic = 'force-dynamic';
 
 export default async function ProductDetailPage({ params }: { params: { id: string } }) {
-    const { id } = await Promise.resolve(params);
+  const response = await fetch(process.env.NEXT_PUBLIC_SITE_URL + '/api/products/' + params.id);
+  const product = await response.json();
 
-    const product = products.find((p) => p.id === id);
+  if (!product) {
+    return <NotFoundPage/>
+  }
 
-    if (!product) {
-        return <NotFoundPage />;
-    }
-
-    return (
+  return (
     <div className="container mx-auto p-8 flex flex-col md:flex-row">
       <div className="md:w-1/2 mb-4 md:mb-0 md:mr-8">
         <img
